@@ -1,0 +1,109 @@
+<section class="catalog">
+  <div class="catalog-heading">
+    <h2>Find your next car</h2>
+    <p class="result-count" aria-live="polite">
+      {{ selectedAutos().length }} of {{ autos().length }} cars
+    </p>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-panel">
+      <fa-icon [icon]="faMagnifyingGlass" aria-hidden="true"></fa-icon>
+      <label class="visually-hidden" for="car-search">Search by brand or model</label>
+      <input
+        id="car-search"
+        type="search"
+        placeholder="Search by brand or model"
+        autocomplete="off"
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)"
+      />
+      @if (searchTerm()) {
+        <button class="icon-btn" type="button" aria-label="Clear search" (click)="searchTerm.set('')">
+          <fa-icon [icon]="faXmark"></fa-icon>
+        </button>
+      }
+    </div>
+
+    <label class="sort">
+      <span>Sort by</span>
+      <select [value]="sort()" (change)="setSort($any($event.target).value)">
+        <option value="default">Featured</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+        <option value="power-desc">Power: high to low</option>
+      </select>
+    </label>
+
+    <button
+      class="fav-toggle"
+      type="button"
+      [attr.aria-pressed]="onlyFavs()"
+      (click)="onlyFavs.set(!onlyFavs())"
+    >
+      <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
+      Favorites <span class="fav-count">{{ fav.count() }}</span>
+    </button>
+  </div>
+
+  <div class="chips" role="group" aria-label="Filter by brand">
+    <button class="chip" type="button" [class.active]="brand() === 'All'" [attr.aria-pressed]="brand() === 'All'" (click)="brand.set('All')">
+      All
+    </button>
+    @for (b of brands(); track b) {
+      <button class="chip" type="button" [class.active]="brand() === b" [attr.aria-pressed]="brand() === b" (click)="brand.set(b)">
+        {{ b }}
+      </button>
+    }
+    @if (hasFilters()) {
+      <button class="reset" type="button" (click)="reset()">Reset filters</button>
+    }
+  </div>
+
+  @if (selectedAutos().length) {
+    <div class="container">
+      @for (auto of selectedAutos(); track auto.id; let i = $index) {
+        <article class="auto-card" [style.--i]="i">
+          <div class="photo-wrap">
+            <img [src]="'images/' + auto.photo" [alt]="auto.brand + ' ' + auto.model" loading="lazy" />
+            @if (auto.availability <= 3) {
+              <span class="badge">Only {{ auto.availability }} left</span>
+            }
+          </div>
+          <div class="details">
+            <p class="card-brand">{{ auto.brand }}</p>
+            <h3>
+              <button class="card-link" type="button" (click)="onSelectCar.emit(auto)">{{ auto.model }}</button>
+            </h3>
+            <p class="specs">
+              <span>{{ auto.power }} CV</span>
+              <span>{{ auto.availability }} in stock</span>
+            </p>
+            <p class="price">{{ auto.price }} <span>DNT</span></p>
+          </div>
+          <button
+            class="fav-btn"
+            type="button"
+            [class.on]="fav.has(auto.id)"
+            [attr.aria-pressed]="fav.has(auto.id)"
+            [attr.aria-label]="(fav.has(auto.id) ? 'Remove ' : 'Save ') + auto.brand + ' ' + auto.model + (fav.has(auto.id) ? ' from favorites' : ' to favorites')"
+            (click)="fav.toggle(auto.id)"
+          >
+            <fa-icon [icon]="faHeart"></fa-icon>
+          </button>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="empty-state" role="status">
+      @if (onlyFavs() && !fav.count()) {
+        <h3>No favorites yet</h3>
+        <p>Tap the heart on a car to save it here.</p>
+      } @else {
+        <h3>No cars found</h3>
+        <p>Try another brand or model, or reset the filters.</p>
+      }
+      <button class="primary" type="button" (click)="reset()">Show all cars</button>
+    </div>
+  }
+</section>

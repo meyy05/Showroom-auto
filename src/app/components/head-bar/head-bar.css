@@ -1,0 +1,51 @@
+:host { display: block; }
+
+.header-bar {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: clamp(32px, 7vw, 72px) clamp(24px, 5vw, 56px);
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  background:
+    radial-gradient(circle at 92% 8%, rgba(194, 77, 123, 0.55), transparent 22rem),
+    var(--wine-deep);
+  color: #fff;
+  box-shadow: var(--shadow-m);
+}
+
+/* the one orchestrated moment: a road line drawing itself under the title */
+.header-bar::after {
+  content: "";
+  position: absolute;
+  left: clamp(24px, 5vw, 56px);
+  bottom: 0;
+  height: 4px;
+  width: min(220px, 40%);
+  border-radius: 4px 4px 0 0;
+  background: var(--rose);
+  transform-origin: left;
+  animation: draw 900ms 150ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+h1 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 4.6rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.tagline {
+  max-width: 46ch;
+  margin: 20px 0 0;
+  color: #f0d3df;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+@keyframes draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}

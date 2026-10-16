@@ -1,0 +1,8 @@
+<header class="header-bar">
+  <h1>Welcome to my showroom!</h1>
+  @if (carCount()) {
+    <p class="tagline">
+      {{ carCount() }} cars from {{ brandCount() }} brands. Search, filter and save the ones you like.
+    </p>
+  }
+</header>

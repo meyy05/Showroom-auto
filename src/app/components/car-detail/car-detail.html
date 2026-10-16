@@ -1,0 +1,37 @@
+<dialog #dlg class="detail" aria-labelledby="detail-title" (close)="closed.emit()" (click)="onBackdropClick($event)">
+  @for (c of [car()]; track c.id) {
+    <div class="sheet">
+      <div class="media">
+        <img [src]="'images/' + c.photo" [alt]="c.brand + ' ' + c.model" />
+      </div>
+      <div class="body">
+        <p class="brand">{{ c.brand }}</p>
+        <h2 id="detail-title">{{ c.model }}</h2>
+        <dl class="facts">
+          <div><dt>Price</dt><dd>{{ c.price }} DNT</dd></div>
+          <div><dt>Power</dt><dd>{{ c.power }} CV</dd></div>
+          <div><dt>In stock</dt><dd>{{ c.availability }}</dd></div>
+        </dl>
+        <p class="desc">{{ c.description }}</p>
+        <button
+          class="fav-action"
+          type="button"
+          [class.on]="fav.has(c.id)"
+          [attr.aria-pressed]="fav.has(c.id)"
+          (click)="fav.toggle(c.id)"
+        >
+          <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
+          {{ fav.has(c.id) ? 'Saved to favorites' : 'Save to favorites' }}
+        </button>
+      </div>
+    </div>
+  }
+
+  <button class="close" type="button" aria-label="Close car details" (click)="dlg.close()">
+    <fa-icon [icon]="faXmark"></fa-icon>
+  </button>
+  <div class="pager">
+    <button type="button" aria-label="Previous car" (click)="prev.emit()"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+    <button type="button" aria-label="Next car" (click)="next.emit()"><fa-icon [icon]="faChevronRight"></fa-icon></button>
+  </div>
+</dialog>

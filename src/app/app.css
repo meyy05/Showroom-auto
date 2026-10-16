@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: 24px clamp(16px, 4vw, 56px) 72px;
+  background:
+    radial-gradient(ellipse at top right, rgba(251, 224, 235, 0.8), transparent 40rem),
+    var(--paper);
+}
+
+@media (max-width: 640px) {
+  :host { padding: 14px 14px 48px; }
+}
