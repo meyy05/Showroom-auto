@@ -73,12 +73,13 @@
           <div class="details">
             <p class="card-brand">{{ auto.brand }}</p>
             <h3>
-              <button class="card-link" type="button" (click)="onSelectCar.emit(auto)">{{ auto.model }}</button>
+              {{ auto.model }}
             </h3>
             <p class="specs">
               <span>{{ auto.power }} CV</span>
               <span>{{ auto.availability }} in stock</span>
             </p>
+            <button class="see-more" type="button" (click)="onSelectCar.emit(auto)">See more</button>
             <p class="price">{{ auto.price }} <span>DNT</span></p>
           </div>
           <button

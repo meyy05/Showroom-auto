@@ -179,20 +179,20 @@
 .card-brand { margin: 0 0 2px; color: var(--muted); font-size: 0.85rem; font-weight: 600; }
 .details h3 { margin: 0; font-size: 1.3rem; letter-spacing: -0.02em; line-height: 1.2; }
 
-/* the whole card is clickable through this stretched link */
-.card-link {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--wine-deep);
-  font: inherit;
-  text-align: left;
-}
-.card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
-.card-link:focus-visible { outline: none; }
-.auto-card:has(.card-link:focus-visible) { outline: 3px solid var(--rose); outline-offset: 2px; }
-
 .specs { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 14px; color: var(--muted); font-size: 0.9rem; }
+.see-more {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: var(--wine);
+  color: #fff;
+  font-weight: 700;
+  transition: background 150ms;
+}
+.see-more:hover { background: var(--wine-deep); }
+.see-more:focus-visible { outline: 3px solid var(--rose); outline-offset: 2px; }
 .price { margin: auto 0 0; color: var(--wine); font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
 .price span { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--muted); }
 
